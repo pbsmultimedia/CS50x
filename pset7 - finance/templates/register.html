@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+
+    {% for key in request.form %}
+        {{ key }}: {{ request.form[key] }}<br>
+    {% endfor %}
+
+    <form action="{{ url_for('register') }}" method="post">
+        <fieldset>
+            <div class="form-group">
+                <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text"/>
+            </div>
+            <div class="form-group">
+                <input class="form-control" name="password" placeholder="Password" type="password"/>
+            </div>
+            <div class="form-group">
+                <input class="form-control" name="password-retype" placeholder="Retype password" type="password"/>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-default" type="submit">Register</button>
+            </div>
+        </fieldset>
+    </form>
+
+    <hr>
+
+    <ul style="text-align: left;">
+
+        <li>
+
+            Require that a user input a username. Render an apology if the user’s input is blank or the username already exists.
+
+        </li>
+
+        <li>
+
+            Require that a user input a password and then that same password again. Render an apology if either input is blank or the passwords do not match.
+
+        </li>
+
+        <li>
+
+            INSERT the new user into users, storing a hash of the user’s password, not the password itself. Odds are you’ll find pwd_context.hash of interest.
+
+        </li>
+
+        <li>
+
+            Odds are you’ll want to create a new template (e.g., register.html) that’s quite similar to login.html.
+
+        </li>
+
+    </ul>
+
+    Once you’ve implemented register correctly, you should be able to register for an account and log in (since login and logout already work)! And you should be able to see your rows via phpLiteAdmin or sqlite3.
+
+{% endblock %}

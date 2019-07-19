@@ -1,0 +1,5 @@
+{% for key in request.form %}
+    {% if request.form[key] == "selected" %}
+        {{ key }} : {{ request.form[key] }} - {{ request.form[key+'-qty'] }}<br>
+    {% endif %}
+{% endfor %}

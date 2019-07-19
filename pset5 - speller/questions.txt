@@ -1,0 +1,47 @@
+0.  What is pneumonoultramicroscopicsilicovolcanoconiosis?
+
+- Pneumonoultramicroscopicsilicovolcanoconiosis is the longest word in the English language.
+It is the base to define the LENGTH of dictionary words, in this case, 45 chars
+
+1.  According to its man page, what does getrusage do?
+
+- getrusage() returns resource usage measures for who, which can be one of the following:
+
+RUSAGE_SELF
+      Return resource usage statistics for the calling process, which is the sum of resources
+      used by all threads in the process.
+
+RUSAGE_CHILDREN
+      Return resource usage statistics for all children of the calling process that have ter‐
+      minated  and  been  waited  for.   These  statistics will include the resources used by
+      grandchildren, and further removed descendants, if all of the  intervening  descendants
+      waited on their terminated children.
+
+RUSAGE_THREAD (since Linux 2.6.26)
+      Return resource usage statistics for the calling thread.
+
+2.  Per that same man page, how many members are in a variable of type struct rusage?
+
+- There are 16 members
+
+3.  Why do you think we pass before and after by reference (instead of by value) to calculate, even though we’re not changing their contents?
+
+- The getrusage function expects a pointer as the struct rusage argument, therefore, we need to pass hte value by reference, and not by value
+
+4.  Explain as precisely as possible, in a paragraph or more, how main goes about reading words from a file.
+    In other words, convince us that you indeed understand how that function’s for loop works.
+
+- Main expects to receive the name of the file via command line, as argument vector 2 or 1, depending on the argument count.
+Then it creates a variable of type file that points hold the data returned by fopen function, if there is no data, the program stops.
+If there is data, it goes into looping thru each char on the file pointer, AKA fp, until it´s not the end of the file.
+If the char is alphabetic, the char is stored on a string ( array ) named word, then the word will be checked against the words on the dictionary.
+
+5.  Why do you think we used fgetc to read each word’s characters one at a time rather than use fscanf with a format string like "%s" to read whole words at a time?
+    Put another way, what problems might arise by relying on fscanf alone?
+
+- It allows to parse each char to check if is alphabetic, and if not, we can remove that char, for example, a comma.
+It also makes it easier to control memory leaks, by avoid to store a string bigger than the memory that we allocated for it.
+
+6.  Why do you think we declared the parameters for check and load as const (which means "constant")?
+
+- It sets the variable as read-only, which protects the value from being changed

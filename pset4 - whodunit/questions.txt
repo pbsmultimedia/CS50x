@@ -1,0 +1,67 @@
+1.  What’s stdint.h?
+
+- is a header file that defines integers with predefined width / size
+
+2.  What’s the point of using uint8_t, uint32_t, int32_t, and uint16_t in a program?
+
+- the capability to store numbers with different widths / sizes
+
+- signed integers have the most significant bit as a flag which marks the value to be positive or negative
+Basic signed integer type. Capable of containing at least the [−32,767, +32,767] thus, it is at least 16 bits in size.
+
+- unsigned integers
+Basic unsigned integer type. Contains at least the [0, 65535] range
+
+3.  How many bytes is a BYTE, a DWORD, a LONG, and a WORD, respectively?
+
+- BYTE: 1
+- DWORD: 4
+- LONG: 4
+- WORD: 2
+
+4.  What (in ASCII, decimal, or hexadecimal) must the first two bytes of any BMP file be?
+Leading bytes used to identify file formats (with high probability) are generally called "magic numbers."
+
+- 42 4D
+
+5.  What’s the difference between bfSize and biSize?
+
+- bfSize is the bitmap image size ( biSize ) plus the bitmap headers
+// bfSize = biSizeImage + sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER)
+- biSize is the size of total rgbtriples plus the padding, if any
+
+
+6.  What does it mean if biHeight is negative?
+
+- it means that the image is top-down device independent bitmap
+
+7.  What field in BITMAPINFOHEADER specifies the BMP’s color depth (i.e., bits per pixel)?
+
+- the field is biBitCount Specifies the number of bits per pixel (bpp). For uncompressed formats, this value is the average number of bits per pixel
+
+8.  Why might fopen return NULL in lines 24 and 32 of copy.c?
+
+- fopen returns null if it fails to open the file that the user inputed on the command line
+
+9.  Why is the third argument to fread always 1 in our code?
+
+- the third argument of fread is the number of the objects to be read, which in this case is 1
+
+10. TODO
+
+What value does line 65 of copy.c assign to padding if bi.biWidth is 3?
+
+- each scanline is a DWORD with 32 bits / 4 bytes, so it needs to be a multiple of 4
+if not, padding is added to achieve a number that is a multiple of four
+
+11. What does fseek do?
+
+- it seeks / sets cursor to the second argument, which is the offset counting from the third argument
+which is whence
+
+12. What is SEEK_CUR?
+
+- it specifies that the offset provided is relative to the current file position
+
+
+

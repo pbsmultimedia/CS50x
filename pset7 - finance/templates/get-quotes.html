@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quotes
+{% endblock %}
+
+{% block main %}
+
+    <h1>Quote</h1>
+
+    <hr>
+
+    <form method="post" id="quote-form">
+
+         <fieldset>
+            <div class="form-group">
+                <input autofocus class="form-control" name="symbol" id="symbol" placeholder="stock symbol" type="text"/>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit">get quote</button>
+            </div>
+        </fieldset>
+
+
+    </form>
+
+    <hr>
+
+    <h2>List of NASDAQ symbols</h2>
+
+    <table class="table">
+
+        <thead>
+
+            <th>symbol</th>
+            <th>name</th>
+            <th>sector</th>
+            <th></th>
+
+        </thead>
+
+        <tbody>
+
+            {% for item in symbols_test %}
+
+                <tr>
+
+                    <td>
+                        {{ item[0] }}
+                    </td>
+                    <td>
+                        {{ item[1] }}
+                    </td>
+                    <td>
+                        {{ item[7] }}
+                    </td>
+                    <td>
+                        <button class="btn btn-default btn-get-quote" data-symbol="{{ item[0] }}">
+                            get quote
+                        </button>
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    <script>
+
+        $(".btn-get-quote").on("click", function(e){
+            $("#symbol").val($(e.target).data("symbol"));
+            $("#quote-form").submit();
+        })
+
+    </script>
+
+{% endblock %}

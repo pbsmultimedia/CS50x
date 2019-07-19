@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quote for X symbol
+{% endblock %}
+
+{% block main %}
+
+    <div class="row">
+
+        <div class="col-xs-12">
+
+            <h1>Quote for {{ quote.name }}</h1>
+
+            <hr>
+
+            <p>
+                symbol: {{ quote.name }}
+                <br>
+                quote: {{ quote.price }}
+            </p>
+
+            <a href="/buy?symbol={{quote.name}}" class="btn btn-primary">buy symbol</a>
+            <a href="/quote" class="btn btn-default">get other quotes</a>
+
+        </div>
+
+    </div>
+
+{% endblock %}

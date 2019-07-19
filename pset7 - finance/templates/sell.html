@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Sell
+{% endblock %}
+
+{% block main %}
+
+    <h1>Sell</h1>
+
+    <hr>
+
+    <form method="POST">
+
+        <table class="table">
+
+            <thead>
+
+                <tr>
+
+                    <th>symbol</th>
+                    <th>aquisition price</th>
+                    <th>current price</th>
+                    <th>actual profit</th>
+                    <th>quantity</th>
+                    <th>total</th>
+                    <th></th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for item in portfolio %}
+
+                    {% set profit = (current_price[loop.index - 1][item.symbol] - item.unit_price) | round(2, 'floor') %}
+
+                    {% set color = 'green' if profit >= 0 else 'red' %}
+
+                    <tr>
+
+                        <td>{{ item.symbol }}</td>
+                        <td>$ {{ item.unit_price }}</td>
+                        <td>$ {{ current_price[loop.index - 1][item.symbol] }}</td>
+                        <td class="{{ color }}">
+                            ${{ profit }}
+                        </td>
+                        <td>{{ item.qty }}</td>
+                        <td>${{ item.total | round(2, 'floor') }}</td>
+                        <td>
+                            <input type="checkbox" name="symbol-{{ item.id }}" id="symbol-{{ item.id }}">
+                            <input type="hidden" name="symbol-{{ item.id }}-id" value="{{ item.id }}">
+                            <input type="hidden" name="symbol-{{ item.id }}-name" value="{{ item.symbol }}">
+                            <input type="hidden" name="symbol-{{ item.id }}-qty-available" value="{{ item.qty }}">
+                            <input type="hidden" name="symbol-{{ item.id }}-current-price" value="{{ current_price[loop.index - 1][item.symbol] }}">
+                            <select name="symbol-{{ item.id }}-qty" class="form-control">
+                                {% for i in range( item.qty ) %}
+                                    {% set i = i + 1 %}
+                                    <option>{{ i }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        <button type="submit" class="btn btn-primary">sell selected symbols</button>
+
+    </form>
+
+{% endblock %}

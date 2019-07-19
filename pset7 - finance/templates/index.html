@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block main %}
+
+    <h1>Portfolio</h1>
+
+    <hr>
+
+    <table class="table table-striped">
+
+        <thead>
+
+            <tr>
+
+                <th>symbol</th>
+                <th>average aquisition price</th>
+                <th>current price</th>
+                <th>actual profit</th>
+                <th>quantity</th>
+                <th>total</th>
+                <!--
+                <th></th>
+                -->
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% set x = { 'profit_total' : 0, 'qty' : 0, 'total' : 0 } %}
+
+            {% for item in portfolio %}
+
+                {% set profit = (current_price[loop.index - 1][item.symbol] - item.unit_price) | round(2, 'floor') %}
+
+                {# shorthand if #}
+                {% set color = 'green' if profit >= 0 else 'red' %}
+
+                {# what the f..? loop variables do not exist outside the loop scope #}
+                {% if x.update({ 'profit_total' : x.profit_total + profit, 'qty' : x.qty + item.qty, 'total' : x.total + item.total }) %}{% endif %}
+
+                <tr>
+
+                    <td>{{ item.symbol }}</td>
+                    <td>${{ item.average_price | round(2, 'floor')}}</td>
+                    <td>${{ current_price[loop.index - 1][item.symbol] }}</td>
+                    <td class="{{ color }}">
+                        ${{ profit }}
+                    </td>
+                    <td>{{ item.qty }}</td>
+                    <td>${{ item.total | round(2, 'floor') }}</td>
+                    <!--
+                    <td>
+                        <a href="/sell?symbol={{ item.symbol }}" class="btn btn-primary">sell</a>
+                    </td>
+                    -->
+                </tr>
+
+            {% endfor %}
+
+            <tr>
+                <td colspan="3"></td>
+                <td>
+                    <strong>${{ x.profit_total | round(2, 'floor') }}</strong>
+                </td>
+                <td>
+                    <strong>{{ x.qty }}</strong>
+                </td>
+                <td>
+                    <strong>${{ x.total | round(2, 'floor') }}</strong>
+                </td>
+            </tr>
+
+        </tbody>
+
+    </table>
+
+{% endblock %}

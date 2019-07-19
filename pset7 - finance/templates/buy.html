@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Buy
+{% endblock %}
+
+{% block main %}
+
+    <h1>Buy</h1>
+
+    <hr>
+
+    <form action="{{ url_for('buy') }}" method="post">
+        <fieldset>
+            <div class="form-group">
+                <input autofocus class="form-control" name="symbol" placeholder="stock symbol" type="text" value="{% if request.args.get('symbol'): %}{{request.args.get('symbol')}}{% endif %}"/>
+            </div>
+            <div class="form-group">
+                <!--
+                <input class="form-control" name="qty" placeholder="number of shares" type="text"/>
+                -->
+                <select name="qty" class="form-control">
+                    {% for i in range ( 1, 101 ) %}
+                        <option value="{{i}}">{{i}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit">Buy</button>
+            </div>
+        </fieldset>
+    </form>
+
+    <!--
+    <ul style="text-align: left;">
+        <li>
+            <p>Require that a user input a stock’s symbol. Render an apology if the input is blank or the symbol does not exist (as per the return value of <code>lookup</code>).</p>
+        </li>
+        <li>
+            <p>Require that a user input a number of shares. Render an apology if the input is not a positive integer.</p>
+        </li>
+        <li>
+            <p>Odds are you’ll want to call <code>lookup</code> to look up a stock’s current price.</p>
+        </li>
+        <li>
+            <p>Odds are you’ll want to <code>SELECT</code> how much cash the user currently has in <code>users</code>.</p>
+        </li>
+        <li>
+            <p>Add one or more new tables to <code>finance.db</code> via which to keep track of the purchase. Store enough information so that you know who bought what at what price and when.</p>
+            <div class="ulist">
+            <ul>
+                <li>
+                    <p>Use appropriate SQLite types.</p>
+                </li>
+                <li>
+                    <p>Define <code>UNIQUE</code> indexes on any fields that should be unique.</p>
+                </li>
+                <li>
+                    <p>Define (non-<code>UNIQUE</code>) indexes on any fields via which you will search (as via <code>SELECT</code> with <code>WHERE</code>).</p>
+                </li>
+            </ul>
+            </div>
+        </li>
+        <li>
+            <p>Render an apology, without completing a purchase, if the user cannot afford the number of shares at the current price.</p>
+        </li>
+        <li>
+            <p>You don’t need to worry about race conditions (or use transactions).</p>
+        </li>
+    </ul>
+    -->
+
+{% endblock %}

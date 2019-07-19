@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block subtext %}
+@{{ screen_name }}
+{% endblock %}
+
+{% block body %}
+{{ chart | safe }}
+
+<hr>
+
+<h1>{{ tweets_list | length }} Tweets</h1>
+
+<hr>
+
+{% for tweet in tweets_list %}
+
+    {% if tweet.score > 0 %}
+
+        {% set sentiment_class = "positive" %}
+
+    {% elif tweet.score < 0 %}
+
+        {% set sentiment_class = "negative" %}
+
+    {% endif %}
+
+    <span class="tweet {{ sentiment_class }}">
+
+        {{ tweet.text }}
+
+    </span>
+
+    <small>
+
+        score: {{ tweet.score }}
+
+    </small>
+
+    <hr>
+
+{% endfor %}
+
+<h1>Numbers</h1>
+
+positive: {{ positive }}
+
+<hr>
+
+negative: {{ negative }}
+
+<hr>
+
+neutral: {{ neutral }}
+
+{% endblock %}

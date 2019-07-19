@@ -1,0 +1,90 @@
+#!/usr/bin/env python3
+
+# http://docs.cs50.net/problems/sentiments/sentiments.html
+
+import os
+import sys
+
+import helpers
+
+from analyzer import Analyzer
+from termcolor import colored
+
+# TODO
+
+# Complete the implementation of main in tweets in such a way that program
+
+def main():
+
+    # ensure proper usage
+    if len(sys.argv) != 2:
+        sys.exit("Usage: ./tweets @screen_name")
+
+    # absolute paths to lists
+    positives = os.path.join(sys.path[0], "positive-words.txt")
+    negatives = os.path.join(sys.path[0], "negative-words.txt")
+
+    tweets = helpers.get_user_timeline(sys.argv[1], 50)
+
+    global_score = 0
+
+    for tweet in tweets:
+
+        #print("\n--- new tweet ---\n")
+
+        #print(tweet)
+
+        # this tweet score
+        score = 0
+
+        # this tweet analyzer - get new score
+        analyzer = Analyzer(positives, negatives)
+
+        # know must loop thru each word, and analyze it
+        words = tweet.split()
+
+        for word in words:
+            #print(word)
+
+            score = analyzer.analyze(word)
+            #print(analyzer.analyze(word))
+
+        #print("score:", score)
+        #print("\nscore of this tweet:", score)
+
+        color = ""
+
+        if(score > 0):
+            color = "green"
+        elif(score < 0):
+            color = "red"
+        else:
+            color = "yellow"
+
+        print(colored(tweet+"\nscore: "+str(score), color))
+        #print(score)
+
+        # global score
+        global_score += score;
+
+        print("\n")
+
+    if(global_score > 0):
+        global_color = "green"
+    elif(global_score < 0):
+        global_color = "red"
+    else:
+        global_color = "yellow"
+
+    print(colored("global score is: "+ str(global_score), global_color))
+
+# accepts one and only one command-line argument, the screen name for a user on Twitter,
+
+# queries Twitter’s API for a user’s most recent 50 tweets,
+
+# analyzes the sentiment of each of those tweets, and
+
+# outputs each tweet’s score and text, colored in green if positive, red if negative, and yellow otherwise.
+
+if __name__ == "__main__":
+    main()
